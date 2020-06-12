@@ -1,5 +1,6 @@
 package it.uniroma3.siw.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,10 @@ protected ProjectRepository projectRepository;
     public Project shareProjectWithUser(Project project, User user) {
         project.addMember(user);
         return this.projectRepository.save(project);
+    }
+    @Transactional
+    public List<Project> retrieveProjectsOwnedBy(User user){
+    	  return this.projectRepository.findByOwner(user);
     }
 }
 
