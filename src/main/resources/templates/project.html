@@ -6,9 +6,15 @@
     <title>TaskManager</title>
 </head>
 <body>
+
+
 <h1 th:text="${project.name}"></h1>
 <h4 th:text="${project.description}" style= "color:green"></h4>
-<div th:if="${members.size()>0}" >
+<h4> <a th:href="'/projects/' + 'share/' + ${project.id}" th:text="Share"> </a></h4>
+<h4> <a th:href="'/projects/' + 'edit/' + ${project.id}" th:text="Edit"> </a></h4>
+<h4> <a th:href="'/projects/' + 'delete/' + ${project.id}" th:text="Delete"> </a></h4>
+<h4> <a th:href="'/projects/' + 'addTask/' + ${project.id}" th:text="AddTask"> </a></h4>
+<div th:if="${members.size()>0}" > 
 <h3>Shared with: </h3>
 <ul>
 <li th:each="member : ${members}">
@@ -16,5 +22,6 @@
 </li>
 </ul>
 </div>
+
 </body>
 </html>

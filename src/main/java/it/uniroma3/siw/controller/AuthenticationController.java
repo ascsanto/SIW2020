@@ -14,6 +14,7 @@ import it.uniroma3.siw.controller.session.SessionData;
 import it.uniroma3.siw.controller.validation.CredentialsValidator;
 import it.uniroma3.siw.controller.validation.UserValidator;
 import it.uniroma3.siw.model.Credentials;
+import it.uniroma3.siw.model.EditPassword;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.service.CredentialsService;
 
@@ -75,4 +76,28 @@ public class AuthenticationController {
         }
         return "registerUser";
     }
+    @RequestMapping(value= {"/users/me/editpassword"}, method = RequestMethod.GET)
+    public String changePasswordGet(Model model) {
+    	model.addAttribute("editPasswordForm", new EditPassword());
+    	return "editPassword";
+    }
+    @RequestMapping(value= {"/users/me/editpassword"}, method = RequestMethod.POST)
+    public String changePasswordPost(@Valid @ModelAttribute("editPasswordForm") EditPassword editPassword, BindingResult bindingResult, Model model) {
+    	User loggedUser = sessionData.getLoggedUser();
+    	String oldPasswordFromForm = editPassword.getOldpassword();
+    	Credentials credentials = this.credentialsService.getCredentials(loggedUser);
+    	String oldPasswordFromDB = credentials.getPassword();
+    	this.credentialsValidator.validatePassword(editPassword.getNewpassword(), bindingResult);
+    	credentialsService.matchPasswords(oldPasswordFromForm, oldPasswordFromDB, bindingResult); 
+    	if(!bindingResult.hasErrors()) {
+    		credentials.setPassword(editPassword.getNewpassword());
+    		this.credentialsService.saveCredentials(credentials);
+    		model.addAttribute("credentials", credentials);
+    		model.addAttribute("user", loggedUser);
+    		return "userProfile";
+    	}
+
+    	return "editPassword";
+
+    }    	
 }

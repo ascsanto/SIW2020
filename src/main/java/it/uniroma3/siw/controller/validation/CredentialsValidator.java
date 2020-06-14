@@ -38,6 +38,15 @@ public class CredentialsValidator implements Validator {
         else if (password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH)
             errors.rejectValue("password", "size");
     }
+    
+    public void validatePassword(String password, Errors errors) {
+    	password = password.trim();
+        if (password.isBlank())
+            errors.rejectValue("newpassword", "required");
+        else if (password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH)
+            errors.rejectValue("newpassword", "size");
+    }
+    
 
     @Override
     public boolean supports(Class<?> clazz) {

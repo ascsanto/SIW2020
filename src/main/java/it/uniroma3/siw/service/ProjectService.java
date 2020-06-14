@@ -44,5 +44,10 @@ protected ProjectRepository projectRepository;
     public List<Project> retrieveProjectsOwnedBy(User user){
     	  return this.projectRepository.findByOwner(user);
     }
+    
+    @Transactional
+    public List<Project> retrieveSharedProjects(User user){
+    	return this.projectRepository.findByMembers(user);
+    }
 }
 

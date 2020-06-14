@@ -10,8 +10,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Errors;
 
 import it.uniroma3.siw.model.Credentials;
+import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.CredentialsRepository;
 
 @Service
@@ -33,7 +35,7 @@ public class CredentialsService {
         Optional<Credentials> result = this.credentialsRepository.findById(id);
         return result.orElse(null);
     }
-
+    
     /**
      * This method retrieves an Credentials from the DB based on its username.
      * @param username the username of the Credentials to retrieve from the DB
@@ -44,6 +46,12 @@ public class CredentialsService {
         Optional<Credentials> result = this.credentialsRepository.findByUserName(username);
         return result.orElse(null);
     }
+    
+     @Transactional
+     public Credentials getCredentials(User user) {
+    	 Optional<Credentials> result = this.credentialsRepository.findByUser(user);
+         return result.orElse(null);
+     }
 
     /**
      * This method saves an Credentials in the DB.
@@ -71,5 +79,13 @@ public class CredentialsService {
         for(Credentials credentials : iterable)
             result.add(credentials);
         return result;
+    }
+    
+    public void matchPasswords(String pw1, String pw2, Errors errors) {
+    	String pw1Enc = this.passwordEncoder.encode(pw1);
+    	String pw2Enc = this.passwordEncoder.encode(pw2);
+    	if(!pw1Enc.equals(pw2Enc))
+    		errors.rejectValue("oldpassword", "match");
+    	
     }
 }

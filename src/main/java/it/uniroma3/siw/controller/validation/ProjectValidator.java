@@ -1,6 +1,7 @@
 package it.uniroma3.siw.controller.validation;
 
 import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -27,10 +28,23 @@ public class ProjectValidator implements Validator{
         if(description.length()>MAX_DESCRIPTION_LENGTH)
         	errors.rejectValue("description", "size");
     }
+	
+	
 
 	 @Override
 	    public boolean supports(Class<?> clazz) {
 	        return User.class.equals(clazz);
 	    }
 
+
+
+	public void validateName(String name, Errors errors) {
+		
+		 if(name.length()<MIN_NAME_LENGTH||name.length()>MAX_NAME_LENGTH)
+	        	errors.rejectValue("name", "size");
+	}
+	public void validateDescription(String description, Errors errors) {
+		 if(description.length()>MAX_DESCRIPTION_LENGTH)
+	        	errors.rejectValue("description", "size");
+}
 }

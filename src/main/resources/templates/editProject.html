@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>TaskManager</title>
+</head>
+<body>
+<h1>Edit Project Details</h1>
+<form id = "editProjectForm"
+th:action="@{/projects/edit}"
+th:object="${editProject}"
+method="POST">
+
+<table>
+        <tr>
+            <td><label for="projectNameForm">Project Name</label>
+            <td><input id=projectNameInput type="text" th:field="*{name}"/></td>
+            <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:style="'color:red'"></td>
+            <td><input type="hidden" name="id" th:field="*{projectId}"></td>
+        </tr>
+        <tr>
+            <td><label for="descriptionForm">Description</label>
+            <td><input id=descriptionInput type="text" th:field="*{description}" /></td>
+            <td th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:style="'color:red'"></td>
+        </tr>
+        <tr><td><button type="submit">Save</button> </td>
+        </table>
+       </form>     
+</body>
+</html>

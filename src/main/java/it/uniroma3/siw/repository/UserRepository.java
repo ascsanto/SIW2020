@@ -1,6 +1,7 @@
 package it.uniroma3.siw.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -15,4 +16,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
      * @return the List of Users that have visibility over the passed Project
      */
     public List<User> findByVisibleProjects(Project project);
+
 }
