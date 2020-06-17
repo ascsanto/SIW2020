@@ -33,10 +33,19 @@ public class Task {
     @Column
     private String description;
     
-   // @OneToOne
-   // private User user;
-
+    @ManyToOne
+    private Project project;
     
+    @ManyToOne
+    private User user;
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
 
 	/**
      * Boolean flag specifying whether this Task is completed or not
@@ -149,13 +158,7 @@ public class Task {
     public void setLastUpdateTimestamp(LocalDateTime lastUpdateTimestamp) {
         this.lastUpdateTimestamp = lastUpdateTimestamp;
     }
-  /*  public User getUser() {
-		return user;
-	} */
 
-	/* public void setUser(User user) {
-		this.user = user;
-	} */
 
 	public List<Tag> getTagList() {
 		return tagList;
@@ -180,4 +183,12 @@ public class Task {
     public int hashCode() {
         return Objects.hash(name, completed, creationTimestamp, lastUpdateTimestamp);
     }
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

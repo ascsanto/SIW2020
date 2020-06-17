@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>TaskManager</title>
+</head>
+<body>
+
+
+<h1 th:text="${task.name}"></h1>
+<h4 th:text="${task.description}" style= "color:green"></h4>
+<h4 th:text="User + ' ' + ${task.user.firstName} + ' ' + ${task.user.lastName}" style="color:gray"> </h4>
+<h4 th:text="Completed + ' ' + ${task.completed}" style="color:gray"> </h4>
+<h4> <a th:href="'/tasks/' + 'edit/' + ${task.id}" th:text="Edit"> </a></h4>
+<h4> <a th:href="'/tasks/' + 'delete/' + ${task.id}" th:text="Delete"> </a></h4>
+<h4> <a th:href="'/tasks/' + 'entrust/' + ${task.id}" th:text="Entrust + ' ' + to..."> </a></h4>
+<h4> <a th:href="'/tasks/' + 'state/' + ${task.id}" th:text="Change + ' ' + state"> </a></h4>
+</body>
+</html>

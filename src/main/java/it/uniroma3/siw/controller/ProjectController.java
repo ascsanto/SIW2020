@@ -96,9 +96,11 @@ public class ProjectController {
 	}
 	@RequestMapping(value= {"/projects/share/{projectId}"}, method = RequestMethod.GET)
 	public String shareProjectGet(Model model,  @PathVariable Long projectId) {
+		Project pj = this.projectService.getProject(projectId);
+		if(pj==null||!pj.getOwner().equals(this.sessionData.getLoggedUser()))
+			return "redirect:/projects";
 		ProjectReceiver projectReceiver = new ProjectReceiver();
 		projectReceiver.setSharedProjectId(projectId);
-		
 		model.addAttribute("projectReceiver", projectReceiver);
 		return "shareProject";
 	}
@@ -107,6 +109,8 @@ public class ProjectController {
 		Credentials credentials = this.credentialsService.getCredentials(pr.getUsername());
 		Project project = this.projectService.getProject(pr.getSharedProjectId());
 		User loggedUser = this.sessionData.getLoggedUser();
+		if(!loggedUser.equals(project.getOwner()))
+			return "redirect:/projects";
 		model.addAttribute("projectReceiver", pr);
 		model.addAttribute("loggedUser", loggedUser);
 		model.addAttribute("project", project);
@@ -128,6 +132,9 @@ public class ProjectController {
 	}
 	@RequestMapping(value = {"/projects/edit/{projectId}"}, method = RequestMethod.GET)
 	public String editProjectGet(Model model, @PathVariable("projectId") Long id) {
+		Project pj = this.projectService.getProject(id);
+		if(pj==null||!pj.getOwner().equals(this.sessionData.getLoggedUser()))
+			return "redirect:/projects";
 		EditProject ep = new EditProject();
 		ep.setProjectId(id);
 		model.addAttribute("editProject", ep);
@@ -145,6 +152,9 @@ public class ProjectController {
 		}
 		if(!br.hasErrors()) {
 			Project project = this.projectService.getProject(ep.getProjectId());
+			User loggedUser = this.sessionData.getLoggedUser();
+			if(!project.getOwner().equals(loggedUser))
+				return "redirect:/projects";
 			if(ep.getName()!=null&&ep.getName().length()!=0) 
 				project.setName(ep.getName());
 			if(ep.getDescription()!=null&&ep.getDescription().length()!=0)
@@ -164,5 +174,7 @@ public class ProjectController {
 		}
 		return "redirect:/projects";
 	}
+	
+	
 	
 }

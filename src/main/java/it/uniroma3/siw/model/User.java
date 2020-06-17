@@ -34,6 +34,9 @@ public class User {
      */
     @Column(nullable = false, length = 100)
     private String lastName;
+    
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy="user")
+    private List<Task> taskList;
 
     /**
      * The List of Projects owned by this User

@@ -22,6 +22,15 @@
 </li>
 </ul>
 </div>
+<div>
+<h2>Tasks: </h2>
+<ul>
+<li th:each="task : ${project.tasks}">
+<h3> <a th:href="'/tasks/' + ${task.id}" th:text="${task.name}"> </a></h3>
+<h4 th:text="${task.user.firstName} + ' ' + ${task.user.lastName}" style="color:gray">User: </h4>
+<h4 th:text ="${task.description}" style="color:gray"></h4>
+</ul>
+</div>
 
 </body>
 </html>
