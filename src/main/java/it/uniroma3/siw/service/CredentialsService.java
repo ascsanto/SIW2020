@@ -52,6 +52,12 @@ public class CredentialsService {
     	 Optional<Credentials> result = this.credentialsRepository.findByUser(user);
          return result.orElse(null);
      }
+     
+     @Transactional
+     public void deleteCredentials(String username) {
+    	 Optional<Credentials> cred =  this.credentialsRepository.findByUserName(username);
+    	 this.credentialsRepository.delete(cred.get());
+     }
 
     /**
      * This method saves an Credentials in the DB.
@@ -81,10 +87,8 @@ public class CredentialsService {
         return result;
     }
     
-    public void matchPasswords(String pw1, String pw2, Errors errors) {
-    	String pw1Enc = this.passwordEncoder.encode(pw1);
-    	String pw2Enc = this.passwordEncoder.encode(pw2);
-    	if(!pw1Enc.equals(pw2Enc))
+    public void matchPasswords(String pw1, String alreadyEncoded, Errors errors) {
+    	if(!this.passwordEncoder.matches(pw1, alreadyEncoded))
     		errors.rejectValue("oldpassword", "match");
     	
     }

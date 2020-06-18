@@ -44,7 +44,7 @@ public class UserController {
     public String home(Model model) {
         User loggedUser = sessionData.getLoggedUser();
         model.addAttribute("user", loggedUser);
-        return "home";
+        return "homenew";
     }
 
     /**
@@ -58,26 +58,13 @@ public class UserController {
     public String me(Model model) {
         User loggedUser = sessionData.getLoggedUser();
         Credentials credentials = sessionData.getLoggedCredentials();
-        System.out.println(credentials.getPassword());
         model.addAttribute("user", loggedUser);
         model.addAttribute("credentials", credentials);
 
         return "userProfile";
     }
 
-    /**
-     * This method is called when a GET request is sent by the user to URL "/users/user_id".
-     * This method prepares and dispatches the User registration view.
-     *
-     * @param model the Request model
-     * @return the name of the target view, that in this case is "register"
-     */
-    @RequestMapping(value = { "/admin" }, method = RequestMethod.GET)
-    public String admin(Model model) {
-        User loggedUser = sessionData.getLoggedUser();
-        model.addAttribute("user", loggedUser);
-        return "admin";
-    }
+  
     
     @RequestMapping(value = {"/users/me/edit"}, method = RequestMethod.GET)
     public String userEdit(Model model){

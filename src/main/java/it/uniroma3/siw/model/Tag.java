@@ -23,8 +23,6 @@ public class Tag {
     @ManyToOne(fetch = FetchType.LAZY)
     private Project project;
 
-    @ManyToMany
-    private List<Task> taskList;
 
     public String getTagName() {
         return tagName;
@@ -65,4 +63,5 @@ public class Tag {
     public void setProject(Project project) {
         this.project = project;
     }
+
 }

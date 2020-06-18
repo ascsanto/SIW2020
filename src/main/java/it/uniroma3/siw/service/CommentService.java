@@ -14,20 +14,20 @@ import it.uniroma3.siw.repository.CommentRepository;
 public class CommentService {
 
     @Autowired
-    private CommentRepository tagRepository;
+    private CommentRepository commentRepository;
 
     @Transactional
-    public Comment getTag(long id){
-        Optional<Comment> comment = tagRepository.findById(id);
+    public Comment getComment(long id){
+        Optional<Comment> comment = commentRepository.findById(id);
         return comment.orElse(null);
     }
     @Transactional
-    public Comment saveTag(Comment comment){
-        return this.tagRepository.save(comment);
+    public Comment saveComment(Comment comment){
+        return this.commentRepository.save(comment);
     }
     @Transactional
-    public void deleteTag(Comment comment){
-        this.tagRepository.delete(comment);
+    public void deleteComment(Comment comment){
+        this.commentRepository.delete(comment);
     }
 
 

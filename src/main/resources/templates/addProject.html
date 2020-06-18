@@ -1,30 +1,72 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
+xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org">
-<head>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <title>TaskManager</title>
-</head>
+  </head>
+  <body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/home">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+    
+      <li class="nav-item">
+        <a class="nav-link" href="/projects">My projects</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/sharedProjects">Shared with me</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/projects/add">Create new Project</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users/me">My Profile</a>
+      </li>
+      
+    </ul>
+    
+    <form class="form-inline my-2 my-lg-0">
+    <a href="/logout" class="btn btn-outline-success my-2 my-sm-0">Logout</a>
+    </form>
+  </div>
+</nav>
 <body>
+<div class="container">
 <h1>Register new project</h1>
+
 <form id = "registerProjectForm"
 th:action="@{/projects/add}"
 th:object="${projectForm}"
 method="POST">
 
-<table>
-        <tr>
-            <td><label for="projectNameForm">Project Name</label>
-            <td><input id=projectNameInput type="text" th:field="*{name}" placeholder="NAME" required/></td>
-            <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:style="'color:red'"></td>
-        </tr>
-        <tr>
-            <td><label for="projectDescriptionForm">Project Description</label>
-            <td><input id=projectDescriptionInput type="text" th:field="*{description}" placeholder="DESCRIPTION" required/></td>
-            <td th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:style="'color:red'"></td>
-        </tr>
-        <tr><td><button type="submit">Register</button> </td>
-        </table>
-       </form>     
+
+
+    <label for="projectNameForm">Project Name</label>
+    <input class="form-control" id=projectNameInput type="text" th:field="*{name}" placeholder="NAME" required >
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:style="'color:red'"></div>
+    
+    
+     <div class="form-group">
+    <label for="projectDescriptionForm">Project Description</label>
+    <input class="form-control" id=projectDescriptionInput type="text" th:field="*{description}" placeholder="DESCRIPTION" required >
+    <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:style="'color:red'"></div>
+     
+    </div>
+     <button type="submit" class="btn btn-primary">Add</button>
+ 
+       </form>
+      </div>      
 </body>
 </html>

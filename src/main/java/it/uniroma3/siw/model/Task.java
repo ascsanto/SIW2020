@@ -2,6 +2,7 @@ package it.uniroma3.siw.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -69,7 +70,8 @@ public class Task {
     @OneToMany(mappedBy = "task", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Comment> commentList;
 
-    @ManyToMany(mappedBy = "taskList") //TODO check mapped by
+    @OneToMany()
+    @JoinColumn(name="task_id")//TODO check mapped by
     private List<Tag> tagList;
 
     public Task() {}

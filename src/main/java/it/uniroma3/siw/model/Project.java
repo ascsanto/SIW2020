@@ -47,8 +47,8 @@ public class Project {
     /**
      * Tasks that this project contains
      */
-    @OneToMany(fetch = FetchType.EAGER,        // whenever a Project is retrieved, always retrieve its tasks too
-            cascade = CascadeType.REMOVE, mappedBy="project")   // if a Project is deleted, all its tasks must be deleted too
+    @OneToMany(       // whenever a Project is retrieved, always retrieve its tasks too
+    		cascade = CascadeType.REMOVE, mappedBy="project")   // if a Project is deleted, all its tasks must be deleted too
     private List<Task> tasks;
 
 

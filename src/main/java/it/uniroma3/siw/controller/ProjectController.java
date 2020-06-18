@@ -19,6 +19,7 @@ import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.EditProject;
 import it.uniroma3.siw.model.Project;
 import it.uniroma3.siw.model.ProjectReceiver;
+import it.uniroma3.siw.model.Tag;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.ProjectService;
@@ -70,6 +71,7 @@ public class ProjectController {
 		model.addAttribute("loggedUser", loggedUser);
 		model.addAttribute("project", project);
 		model.addAttribute("members", members);
+		System.out.println("NUMERO TASK PRESENTI" + project.getTasks().size());
 		return "project";
 	}
 	
@@ -104,6 +106,9 @@ public class ProjectController {
 		model.addAttribute("projectReceiver", projectReceiver);
 		return "shareProject";
 	}
+	
+	
+	
 	@RequestMapping(value= {"/projects/share"}, method = RequestMethod.POST)
 	public String shareProjectPost(@Valid @ModelAttribute("projectReceiver") ProjectReceiver pr, BindingResult br, Model model) {
 		Credentials credentials = this.credentialsService.getCredentials(pr.getUsername());
@@ -114,11 +119,11 @@ public class ProjectController {
 		model.addAttribute("projectReceiver", pr);
 		model.addAttribute("loggedUser", loggedUser);
 		model.addAttribute("project", project);
-		if(credentials==null) {
+		if(credentials==null||credentials.getUser().equals(loggedUser)) {
 			br.rejectValue("username", "notexist");
-			return "project";
+			
 		}
-		else {
+		if(!br.hasErrors()) {
 		User user = credentials.getUser();
 		List<User> members = project.getMembers();
 		members.add(user);
@@ -128,7 +133,7 @@ public class ProjectController {
 		model.addAttribute("members", members);
 		return "project";
 		}
-		//devo controllare come gestire gli errori
+		return "shareProject";
 	}
 	@RequestMapping(value = {"/projects/edit/{projectId}"}, method = RequestMethod.GET)
 	public String editProjectGet(Model model, @PathVariable("projectId") Long id) {
@@ -174,7 +179,6 @@ public class ProjectController {
 		}
 		return "redirect:/projects";
 	}
-	
 	
 	
 }

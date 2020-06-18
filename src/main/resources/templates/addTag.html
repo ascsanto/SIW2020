@@ -44,27 +44,29 @@ xmlns="http://www.w3.org/1999/xhtml"
 </nav>
 <body>
 <div class="container">
-<h1>Edit Project Details</h1>
-<form id = "editProjectForm"
-th:action="@{/projects/edit}"
-th:object="${editProject}"
+<h1>Add new Tag</h1>
+<form id = "addTagForm"
+th:action="@{/projects/addTag}"
 method="POST">
 
 <div class="form-group">
-    <label for="projectNameForm">Project Name</label>
-    <input class="form-control" id=projectNameInput type="text" th:field="*{name}" >
-    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:style="'color:red'"></div>
-     <div><input type="hidden" name="id" th:field="*{projectId}"></div>
+    <label for="nameForm">Tag Name</label>
+    <input class="form-control" id=nameInput type="text" th:field="*{tag.tagName}" placeholder="NAME" required >
+    <div th:if="${#fields.hasErrors('tag.tagName')}" th:errors="*{name}" th:style="'color:red'"></div>
+     <div><input id=project type="hidden" th:field="*{tag.project}"></div>
  </div>
  <div class="form-group">
-    <label for="descriptionForm">Description</label>
-    <input class="form-control" id=descriptionInput type="text" th:field="*{description}" >
-    <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:style="'color:red'"></div>
-    
+    <label for="descriptionForm">Task Description</label>
+    <input class="form-control" id=descriptionInput type="text" th:field="*{tag.description}" placeholder="DESCRIPTION" >
+    <div th:if="${#fields.hasErrors('tag.description')}" th:errors="*{description}" th:style="'color:red'"></div>
+</div>
+     <div class="form-group">
+    <label for="descriptionForm">Color</label>
+    <input class="form-control" id=colorInput type="color" th:field="*{tag.color}" placeholder="COLOR" >
+    <div th:if="${#fields.hasErrors('tag.color')}" th:errors="*{color}" th:style="'color:red'"></div>  
 </div>
         <button type="submit" class="btn btn-primary">Save</button>
         </form>
-    
-       </div>
+   </div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package it.uniroma3.siw.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,20 +20,21 @@ public class Comment {
 
     @ManyToOne
     private User author;
-
-    private String comment;
+    
+    @Column(nullable=false)
+    private String commentText;
 
 
     @ManyToOne
     private Task task;
+  
 
-
-    public String getComment() {
-        return comment;
+    public String getCommentText() {
+        return commentText;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setCommentText(String comment) {
+        this.commentText = comment;
     }
 
     public Task getTask() {
@@ -58,5 +60,6 @@ public class Comment {
     public void setId(Long id) {
         this.id = id;
     }
+
 
 }

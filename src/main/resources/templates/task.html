@@ -1,3 +1,152 @@
+<!doctype html>
+<html lang="en"
+xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+   
+   
+    <title>TaskManager</title>
+  </head>
+  <body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/home">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+    
+      <li class="nav-item">
+        <a class="nav-link" href="/projects">My projects</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/sharedProjects">Shared with me</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/projects/add">Create new Project</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users/me">My Profile</a>
+      </li>
+      
+    </ul>
+    
+    <form class="form-inline my-2 my-lg-0">
+    <a href="/logout" class="btn btn-outline-success my-2 my-sm-0">Logout</a>
+    </form>
+  </div>
+</nav>
+
+<h1  class="text-center"  th:text="${task.name}"></h1>
+<br>
+<p class="text-center"  th:text="${task.description}" ></p>
+<br>
+<p class="text-center" th:text="User + ' ' + ${task.user.firstName} + ' ' + ${task.user.lastName}" style="color:gray"> </p>
+<br>
+<p class="text-center" th:text="Completed + ' ' + ${task.completed}" style="color:gray"> </p>
+<br><br>
+<div th:if="${task.tagList.size()>0}" >
+<h6 class="text-center">Tags</h6>
+				<div class="nav justify-content-center">
+					<div class="list-group list-group-horizontal">
+						<div th:each="tag : ${task.tagList}"
+							th:style="@{'background-color:' + ${tag.color}}" class="card m-1"
+							style="width: 10rem;">
+							<div class="card-body">
+
+								<h6 class="card-subtitle mb-2 text-muted"
+									th:text="${tag.tagName}" style="color: white;"></h6>
+								<div th:if="${task.getUser().equals(loggedUser)}" class="card-footer">
+								<a th:href="'/task/removeTag/' +${task.id} +'/' +${tag.id}" >Remove</a>
+							</div>
+							</div>
+
+					
+						</div>
+					</div>
+				</div>
+
+</div>
+<br><br>
+<div class="nav justify-content-center">
+<div th:if="${task.commentList.size()>0}" ></div>
+<div class="card m-1"  style="width: 18rem;" th:each="comment : ${task.commentList}">
+	    <div class="card-body">
+	        <div class="row">
+        	    <div class="col-md-2">
+        	        <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
+        	        
+        	    </div>
+        	    <div class="col-md-10">
+        	        <p>
+        	            <a class="float-left" th:text="${comment.author.firstName} + ' ' + ${comment.author.lastName}"></a>
+        	            
+
+        	       </p>
+        	       <div class="clearfix"></div>
+        	        <p th:text="${comment.commentText}"></p>
+        	       
+        	    </div>
+        	    <div th:if="${loggedUser.equals(comment.getAuthor())}">
+  		<a th:href="'/comment/delete/' + ${comment.id}" class="card-link">Delete</a>
+  	</div>
+	        </div>
+	        </div>
+	        </div>
+</div>
+
+<br><br><br>
+<div class="container">
+ 
+<form id = "addCommentForm"
+th:action="@{/tasks/addComment}"
+th:object="${addComment}"
+method="POST">
+ <div class="form-group">
+
+    <label for="labelComment">Add a comment</label>
+    <textarea class="form-control" id="commentTextArea" rows="3" th:field="*{comment.commentText}" required></textarea>
+    <input type="hidden" id=hidd th:field="*{taskId}">
+     <br>
+    <div th:if="${#fields.hasErrors('comment.commentText')}" th:errors="${comment.commentText}" th:style="'color:red'"></div>
+   
+    
+  </div>
+  <button type="submit" class="btn btn-primary">Add</button>
+</form>
+</div>
+
+<br><br><br>
+<ul class="nav justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link" th:href="'/tasks/' + 'edit/' + ${task.id}" th:text="Edit"></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" th:href="'/tasks/' + 'delete/' + ${task.id}" th:text="Delete"></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" th:href="'/tasks/' + 'entrust/' + ${task.id}" th:text="Entrust + ' ' + to..."></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" th:href="'/tasks/' + 'state/' + ${task.id}" th:text="Change + ' ' + state"></a>
+    </li>
+     <li class="nav-item">
+    <a class="nav-link" th:href="'/tasks/' + 'addTag/' + ${task.id}" th:text="Add + ' ' + Tag"></a>
+    </li>
+    
+</ul>
+
+
+<!-- 
+
 <!DOCTYPE html>
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
@@ -12,9 +161,17 @@
 <h4 th:text="${task.description}" style= "color:green"></h4>
 <h4 th:text="User + ' ' + ${task.user.firstName} + ' ' + ${task.user.lastName}" style="color:gray"> </h4>
 <h4 th:text="Completed + ' ' + ${task.completed}" style="color:gray"> </h4>
+<h4>Tags</h4>
+<ul>
+<li th:each="tag : ${task.tagList}">
+<div th:text="${tag.tagName}"></div>
+</li>
+</ul>
 <h4> <a th:href="'/tasks/' + 'edit/' + ${task.id}" th:text="Edit"> </a></h4>
 <h4> <a th:href="'/tasks/' + 'delete/' + ${task.id}" th:text="Delete"> </a></h4>
 <h4> <a th:href="'/tasks/' + 'entrust/' + ${task.id}" th:text="Entrust + ' ' + to..."> </a></h4>
 <h4> <a th:href="'/tasks/' + 'state/' + ${task.id}" th:text="Change + ' ' + state"> </a></h4>
+<h4> <a th:href="'/tasks/' + 'addTag/' + ${task.id}" th:text="Add + ' ' + Tag"> </a></h4>
 </body>
 </html>
+ -->
