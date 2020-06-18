@@ -136,7 +136,7 @@ public class TaskController {
 			taskDB.setDescription(task.getDescription());
 			this.taskService.saveTask(taskDB);;
 			model.addAttribute("task", taskDB);
-			return "task";
+			return "redirect:/tasks/"+taskDB.getId();
 		}
 		
 		model.addAttribute("task", taskDB);
