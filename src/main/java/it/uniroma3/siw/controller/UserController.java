@@ -90,11 +90,15 @@ public class UserController {
 			if(modified) {
 				this.userRepository.save(loggedUser);
 			}
+			Credentials credentials = sessionData.getLoggedCredentials();
+			model.addAttribute("credentials", credentials);
+			model.addAttribute("user", loggedUser);
+			return "userProfile";
 		}
-		Credentials credentials = sessionData.getLoggedCredentials();
-		model.addAttribute("credentials", credentials);
-		model.addAttribute("user", loggedUser);
-		return "userProfile";
+		model.addAttribute("loggedUser", loggedUser);
+    	model.addAttribute("editUserForm", editUser);
+    	return "editUser";
+		
     }
 
 }

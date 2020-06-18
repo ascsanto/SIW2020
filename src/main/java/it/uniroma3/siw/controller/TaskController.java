@@ -98,7 +98,7 @@ public class TaskController {
 			return "redirect:/projects";
 		}
 		model.addAttribute("addTask", addTask);
-		return "redirect: /projects/addTask/" + addTask.getProjectId();
+		return "redirect:/projects/addTask/" + addTask.getProjectId();
 	}
 	
 	@RequestMapping(value= {"/tasks/{taskID}"}, method=RequestMethod.GET)

@@ -53,13 +53,13 @@ method="POST">
 <div class="form-group">
     <label for="nameForm">Task Name</label>
     <input class="form-control" id=nameInput type="text" th:field="*{addTask.task.name}" placeholder="NAME" required >
-    <div th:if="${#fields.hasErrors('addTask.task.name')}" th:errors="*{name}" th:style="'color:red'"></div>
+    <div th:if="${#fields.hasErrors('addTask.task.name')}" th:errors="*{task.name}" th:style="'color:red'"></div>
      <div><input id=id type="hidden" th:field="*{addTask.projectId}"></div>
  </div>
  <div class="form-group">
     <label for="descriptionForm">Task Description</label>
     <input class="form-control" id=descriptionInput type="text" th:field="*{addTask.task.description}" placeholder="DESCRIPTION" >
-    <div th:if="${#fields.hasErrors('addTask.task.description')}" th:errors="*{description}" th:style="'color:red'"></div>
+    <div th:if="${#fields.hasErrors('addTask.task.description')}" th:errors="*{task.description}" th:style="'color:red'"></div>
     
 </div>
         <button type="submit" class="btn btn-primary">Save</button>

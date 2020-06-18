@@ -54,7 +54,7 @@ method="POST">
 <div class="form-group">
     <label  for="userFirstNameForm">First Name</label>
     <input class="form-control" id=userFirstNameInput type="text" th:field="*{firstName}" placeholder="FIRST NAME" >
-    <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{name}" th:style="'color:red'"></div>
+    <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" th:style="'color:red'"></div>
 </div>
 
 <div class="form-group">

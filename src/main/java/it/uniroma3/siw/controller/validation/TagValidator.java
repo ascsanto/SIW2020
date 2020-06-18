@@ -25,11 +25,11 @@ public class TagValidator implements Validator{
 		String description = tag.getDescription().trim();
 		
 		 if (name.isBlank())
-	           errors.rejectValue("name", "required");
+	           errors.rejectValue("tagName", "required");
 	     else if(name.length()<MIN_NAME_LENGTH||name.length()>MAX_NAME_LENGTH)
-	        	errors.rejectValue("name", "size");
+	        	errors.rejectValue("tagName", "namesize");
 		 if(description.length()>MAX_DESCRIPTION_LENGTH)
-	        	errors.rejectValue("description", "size");
+	        	errors.rejectValue("description", "descsize");
 	}
 
 }
