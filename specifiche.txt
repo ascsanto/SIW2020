@@ -1,0 +1,22 @@
+Casi d'uso: User
+- Signup: l'utente deve immettere username e password che verranno salvati in Credentials, nome e cognome che verranno salvati in User, se questi campi non sono nulli e non superano i limiti di lunghezza viene registrato il nuovo utente
+- Autenticazione: l'utente deve immettere username e password, se sono corretti (corrispondono a un utente già registrato nel db) avviene l'autenticazione
+- Visualizzare il mio profilo: viene mostrata una schermata con username, nome, cognome, ruolo (default o admin), data di registrazione e data dell'ultimo aggiornamento
+- Aggiornare il mio profilo: dalla schermata di visualizzazione del proprio profilo si può andare su "edit my information" per modificare nome e cognome (che se non hanno errori verranno aggiornati in User) e su "change my password" per modificare la password (se la password vecchia è corretta viene aggiornata con la nuova in Credentials)
+
+Casi d'uso: Project
+- Creare un nuovo progetto: l'utente deve inserire nome e descrizione del nuovo progetto, se non sono nulli il progetto viene creato
+- Visualizzare i miei progetti: vengono visualizzati tutti i progetti creati dall'utente
+- Visualizzare i progetti condivisi con me: vengono visualizzati tutti i progetti condivisi con l'utente
+- Aggiornare i dati di un mio progetto: l'utente inserisce nuovi nome e descrizione di un progetto esistente, se un campo rimane nullo non viene modificato
+- Cancellare un mio progetto: premendo "delete project" dalla schermata del progetto, questo viene eliminato
+- Condividere un mio progetto con un altro utente: l'utente deve scrivere lo username dell'utente con il quale vuole condividere il proprio progetto, se lo username corrisponde a un utente registrato, il progetto viene condiviso con lui
+- Aggiungere un tag ad un mio progetto: l'utente deve inserire nome e descrizione del tag (che devono essere corretti), e può scegliere il colore del tag da un'apposito dropdown
+
+Casi d'uso: Task
+- Aggiungere un nuovo Task a un mio progetto: l'utente deve inserire nome e descrizione del task, se non sono nulli il task viene creato e associato al progetto
+- Aggiornare un Task di un mio progetto: l'utente inserisce nuovi nome e descrizione di un task esistente, se un campo rimane nullo non viene modificato
+- Cancellare un Task da un mio progetto: premendo "delete" dalla schermata del task, questo viene eliminato
+- Assegnare un Task di un mio progetto ad un utente che ha visibilità sul mio progetto: l'utente deve scrivere lo username dell'utente con al quale vuole assegnare il task, se lo username corrisponde a un utente registrato, il task gli viene assegnato
+- Aggiungere un Tag ad un task di un mio progetto: l'utente può scegliere un tag tra i tag del progetto e aggiungerlo
+- Aggiungere un Commento ad un Task di un progetto su cui ho visibilità: dalla schermata del task l'utente può scrivere un commento e aggiungerlo al task premendo "add"
